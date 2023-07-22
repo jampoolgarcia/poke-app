@@ -1,21 +1,26 @@
-import { component$ } from "@builder.io/qwik";
+import { component$, useSignal } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 
 
 export default component$(() => {
+  // Variables y logica
+  const pokemonId = useSignal<number>(0);
+
+  // template
   return (
     <>
-      <h1>index-component</h1>
+      <span class="text-2xl">Buscador Simple</span>
+      <span class="text-9xl">{ pokemonId }</span>
     </>
   );
 });
 
 export const head: DocumentHead = {
-  title: "Welcome to Qwik",
+  title: "Poke-Qwik",
   meta: [
     {
       name: "description",
-      content: "Qwik site description",
+      content: "This is a first app in Qwik, Jampool Garcia. Poke-Qwik",
     },
   ],
 };

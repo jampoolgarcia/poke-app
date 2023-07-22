@@ -7,6 +7,7 @@ import styles from "./styles.css?inline";
 
 
 import Navbar from "~/shared/navbar/navbar";
+import App from "./index";
 
 
 
@@ -33,7 +34,7 @@ export default component$(() => {
     <>
       <Navbar />
       <main class="flex flex-col items-center justify-center">
-        <h1>Hello work- poke qwik</h1>
+        <App />
       </main>
     </>
   );
