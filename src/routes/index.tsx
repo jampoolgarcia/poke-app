@@ -1,14 +1,14 @@
+// core
 import { $, component$, useSignal } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
+import { PokemonImage } from "~/components/shared/pokemons/pokemon-image";
 
 
 export default component$(() => {
-  // Variables y logica
+  // declaraciones 
   const pokemonId = useSignal<number>(0);
-  const url = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon';
 
-
-  // 143130000038317
+  // funciones
   const changePokemon =$((value: number) =>{
     if((pokemonId.value+value)<= 0) return;
 
@@ -22,7 +22,7 @@ export default component$(() => {
       <span class="text-9xl">{ pokemonId }</span>
 
       <div class="mt-2 text-center">
-        <img src={`${url}/${pokemonId.value}.png`} alt="pokemon img" style={{ width: '200px', height: '200px' }} />
+        <PokemonImage id={pokemonId.value} />        
         <button onClick$={() => changePokemon(-1)} class="btn btn-primary mr-2">Back</button>
         <button onClick$={() => changePokemon(+1)} class="btn btn-primary mr-2">Next</button>
       </div>
