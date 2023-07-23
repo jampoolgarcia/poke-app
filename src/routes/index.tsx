@@ -1,4 +1,4 @@
-import { component$, useSignal } from "@builder.io/qwik";
+import { $, component$, useSignal } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 
 
@@ -6,6 +6,14 @@ export default component$(() => {
   // Variables y logica
   const pokemonId = useSignal<number>(0);
   const url = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon';
+
+
+  // 143130000038317
+  const changePokemon =$((value: number) =>{
+    if((pokemonId.value+value)<= 0) return;
+
+    pokemonId.value += value;
+  })
 
   // template
   return (
@@ -15,8 +23,8 @@ export default component$(() => {
 
       <div class="mt-2 text-center">
         <img src={`${url}/${pokemonId.value}.png`} alt="pokemon img" style={{ width: '200px', height: '200px' }} />
-        <button onClick$={ () => pokemonId.value-- } class="btn btn-primary mr-2">Back</button>
-        <button onClick$={ () => pokemonId.value++ } class="btn btn-primary mr-2">Next</button>
+        <button onClick$={() => changePokemon(-1)} class="btn btn-primary mr-2">Back</button>
+        <button onClick$={() => changePokemon(+1)} class="btn btn-primary mr-2">Next</button>
       </div>
     </>
   );
