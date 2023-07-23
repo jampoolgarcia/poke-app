@@ -34,7 +34,7 @@ export default component$(() => {
     <>
       <Navbar />
       <main class="flex flex-col items-center justify-center">
-        <App />
+        <Slot />
       </main>
     </>
   );
