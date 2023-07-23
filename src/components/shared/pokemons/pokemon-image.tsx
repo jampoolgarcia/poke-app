@@ -16,7 +16,10 @@ export const PokemonImage = component$(({ id, size = 200, backImg = false }: Pro
     // template
     return (
         <>
-          <img src={`${url}/${backImg ? 'back/': ''}${id}.png`} alt="pokemon img" style={{ width: `${size}px`, height: `${size}px` }} />
+          <img 
+            src={`${url}/${backImg ? 'back/': ''}${id}.png`} 
+            alt="pokemon img" 
+            style={{ width: `${size}px`, height: `${size}px` }} />
         </>
     )
 })
