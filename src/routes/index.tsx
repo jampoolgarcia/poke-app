@@ -7,7 +7,8 @@ import { PokemonImage } from "~/components/shared/pokemons/pokemon-image";
 export default component$(() => {
   // declaraciones 
   const pokemonId = useSignal(1);
-  const showBackImg = useSignal(false); // 1
+  const showBackImg = useSignal(false); 
+  const visible = useSignal(false);
 
   // funciones
   const changePokemon =$((value: number) =>{
@@ -22,11 +23,13 @@ export default component$(() => {
       <span class="text-2xl">Buscador Simple</span>
       <span class="text-9xl">{ pokemonId }</span>
 
-      <div class="mt-2 text-center">
-        <PokemonImage id={pokemonId.value} backImg={showBackImg.value} />      {/* 3 */}  
+      <PokemonImage id={pokemonId.value} isBack={showBackImg.value} isVisible={visible.value} /> 
+
+      <div class="mt-2">
         <button onClick$={() => changePokemon(-1)} class="btn btn-primary mr-2">Back</button>
         <button onClick$={() => changePokemon(+1)} class="btn btn-primary mr-2">Next</button>
-        <button onClick$={() => showBackImg.value = !showBackImg.value } class="btn btn-primary mr-2">Voltear</button> {/* 2 */}
+        <button onClick$={() => showBackImg.value = !showBackImg.value } class="btn btn-primary mr-2">Voltear</button> 
+        <button onClick$={() => visible.value = !visible.value } class="btn btn-primary mr-2 w-32">{ visible.value ? 'Ocultar': 'Revelar'}</button> 
       </div>
     </>
   );
