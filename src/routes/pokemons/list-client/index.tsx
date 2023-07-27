@@ -1,5 +1,9 @@
-import { component$, useStore } from '@builder.io/qwik';
+import { component$, useStore, useVisibleTask$ } from '@builder.io/qwik';
 import { DocumentHead } from '@builder.io/qwik-city';
+
+
+import { PokemonImage } from '~/components/shared/pokemons/pokemon-image';
+import { getSmallPokemons } from '~/helpers/get-small-pokemons';
 import { ISmallPokemon } from '~/interfaces';
 
 export interface IPokemonPageState {
@@ -12,6 +16,12 @@ export default component$(() => {
   const pokemonState = useStore<IPokemonPageState>({
     currentPage: 0,
     pokemons: []
+  })
+
+  useVisibleTask$(async ({ track }) => {
+    track(() => pokemonState.currentPage);
+    const pokemons = await getSmallPokemons(pokemonState.currentPage*30, 30);
+    pokemonState.pokemons = [...pokemonState.pokemons, ...pokemons];
   })
 
   return ( <>
@@ -32,14 +42,14 @@ export default component$(() => {
     </div>
 
     <div class="grid grid-cols-5 mt-5">
-        {/* {
-          pokemons.value.map(({ name, id }) => (
+        {
+          pokemonState.pokemons.map(({ name, id }) => (
             <div key={name} class="mt-5 flex flex-col justify-center items-center">
               <PokemonImage id={id} />
               <span class="capitalize">{ name }</span>
             </div>
           ))
-        } */}
+        } 
     </div>
   </>)
 });
