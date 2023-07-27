@@ -12,7 +12,7 @@ export const usePokemonId = routeLoader$<number>(({params, redirect}) => {
     id < 1    ||
     id > 1000
   ) {
-    redirect(301, '/');
+    throw redirect(301, '/');
   }
 
   return id;
