@@ -1,4 +1,4 @@
-import { $, component$, useSignal, useTask$ } from "@builder.io/qwik";
+import { $, component$, useComputed$, useSignal, useTask$ } from "@builder.io/qwik";
 
 interface Props {
     id: number;
@@ -7,13 +7,16 @@ interface Props {
     isVisible?: boolean;
 }
 
-export const PokemonImage = component$(({ id, size = 200, isBack = false, isVisible = false }: Props) =>{
+export const PokemonImage = component$(({ id, size = 96, isBack = false, isVisible = true }: Props) =>{
    // declaraciones
-   const url = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon';
+   const api = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon';
    const imgLoaded = useSignal(false);
 
+   const url = useComputed$<string>(() =>{
+     return `${api}/${isBack ? 'back/': ''}${id}.png`
+   })
+
    // funciones
-   
    useTask$(({track}) => {
     track(() => id);
     imgLoaded.value = false;
@@ -26,10 +29,13 @@ export const PokemonImage = component$(({ id, size = 200, isBack = false, isVisi
             { !imgLoaded.value && <span>Cargando...</span>}
            
             <img 
-            src={`${url}/${isBack ? 'back/': ''}${id}.png`} 
+            src={url.value} 
             alt="pokemon img" 
             style={{ width: `${size}px`, height: `${size}px`}}
-            onLoad$={() => imgLoaded.value=true }
+            onLoad$={() => {
+                console.log('imgLoaded');
+                imgLoaded.value=true
+            }}
             class={[{
                 'hidden': !imgLoaded.value,
                 'brightness-0': !isVisible
