@@ -19,6 +19,9 @@ export default component$(() => {
           <li>
             <Link href="/pokemons/list-client/">client-list</Link>
           </li>
+          <li>
+            <Link href="/counter">counter</Link>
+          </li>
         </ul>
       </div>
     </header>
