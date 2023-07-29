@@ -1,7 +1,7 @@
 import { component$, useContext } from '@builder.io/qwik';
-import { routeLoader$ } from '@builder.io/qwik-city';
+import { Link, routeLoader$ } from '@builder.io/qwik-city';
 import { PokemonImage } from '~/components/shared/pokemons/pokemon-image';
-import { PokemonGameContext } from '~/context';
+import { usePokemonGame } from '~/hooks/use-pokemon-game';
 
 export const usePokemonId = routeLoader$<number>(({params, redirect}) => {
   const id = Number(params.id);
@@ -25,7 +25,7 @@ export default component$(() => {
   const pokemonId = usePokemonId();
 
   // usamos el contexto
-  const pokemonGame = useContext(PokemonGameContext);
+  const { id, isBack, size, isVisible, toggleBack, toggleVisible } = usePokemonGame();
   
   return(
     <>
@@ -35,10 +35,10 @@ export default component$(() => {
       */}
 
       <div class="text-5xl">Pokemon: { pokemonId }</div>
-      <PokemonImage id={pokemonId.value} isBack={pokemonGame.isBack} size={(pokemonGame.size)!*1.5} isVisible={pokemonGame.isVisible} /> 
+      <PokemonImage id={id.value} isBack={isBack.value} size={(size.value)!*1.5} isVisible={isVisible.value} /> 
       <div class="mt-2">
-        <button onClick$={() => pokemonGame.isBack = !pokemonGame.isBack } class="btn btn-primary mr-2">Voltear</button>
-        <button onClick$={() => pokemonGame.isVisible = !pokemonGame.isVisible } class="btn btn-primary mr-2">{pokemonGame.isVisible ? 'Ocultar' : 'Mostrar'}</button>
+        <button onClick$={ toggleBack } class="btn btn-primary mr-2">Voltear</button>
+        <button onClick$={ toggleVisible } class="btn btn-primary mr-2 w-32">{isVisible.value ? 'Ocultar' : 'Mostrar'}</button>
       </div>
     </>
   ) 
