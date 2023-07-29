@@ -1,34 +1,26 @@
-import { component$, Slot, useStyles$ } from "@builder.io/qwik";
-import { routeLoader$ } from "@builder.io/qwik-city";
-import type { RequestHandler } from "@builder.io/qwik-city";
-
+import { component$, Slot, useContextProvider, useStore, useStyles$ } from "@builder.io/qwik";
 
 import styles from "./styles.css?inline";
 
-
 import Navbar from "~/shared/navbar/navbar";
 import App from "./index";
+import { IPokemonGameState, PokemonGameContext } from "~/context";
 
 
-
-export const onGet: RequestHandler = async ({ cacheControl }) => {
-  // Control caching for this request for best performance and to reduce hosting costs:
-  // https://qwik.builder.io/docs/caching/
-  cacheControl({
-    // Always serve a cached response by default, up to a week stale
-    staleWhileRevalidate: 60 * 60 * 24 * 7,
-    // Max once every 5 seconds, revalidate on the server to get a fresh version of this page
-    maxAge: 5,
-  });
-};
-
-export const useServerTimeLoader = routeLoader$(() => {
-  return {
-    date: new Date().toISOString(),
-  };
-});
 
 export default component$(() => {
+
+  // creamos el valor por defecto del contexto.
+  const PokemonGame = useStore<IPokemonGameState>({
+    id: 1,
+    size: 200,
+    isVisible: true,
+    isBack: false
+  })
+
+  // proveemos el contexto en nuestra app
+  useContextProvider(PokemonGameContext, PokemonGame);
+
   useStyles$(styles);
   return (
     <>
