@@ -7,7 +7,6 @@ export const getSmallPokemons = (async(offset = 0, limint =10): Promise<ISmallPo
     return data.results.map(({url, name}) =>{
         const segment = url.split('/');
         const id = Number(segment.at(-2)!);
-        console.log('id', id);
         return { id, name };
     })
 })
