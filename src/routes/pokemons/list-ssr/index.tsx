@@ -9,7 +9,7 @@ import { ISmallPokemon } from '~/interfaces';
 export const usePokemonList = routeLoader$<ISmallPokemon[]>(async ({query, redirect, pathname}) =>{
 
   const offset = Number(query.get('offset') || '0');
-
+ 
   if(
     isNaN(offset) ||
     offset < 0

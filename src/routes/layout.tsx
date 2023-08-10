@@ -6,7 +6,7 @@ import Navbar from "~/shared/navbar/navbar";
 import { PokemonProvaider } from "~/context";
 
 export default component$(() => {
-
+  
   useStyles$(styles);
   return (
     <>
